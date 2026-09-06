@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07130f">
+<title>IRRY | Smart Irrigation Dashboard</title>
+<style>
+:root{--bg:#06100d;--panel:#0b1814;--panel2:#0f211b;--line:#1b332a;--text:#eaf5f0;--muted:#8ca49b;--green:#21d39a;--green2:#0aa878;--blue:#4ba3ff;--amber:#f4c95d;--red:#ff5d63;--shadow:0 18px 50px rgba(0,0,0,.28)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 15% 0%,#0d2b21 0,#06100d 34%),var(--bg);color:var(--text);min-height:100vh}.app{max-width:1500px;margin:auto;padding:22px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),#0c7f60);box-shadow:0 8px 24px rgba(33,211,154,.22);font-size:23px}.brand h1{font-size:20px}.brand p{font-size:12px;color:var(--muted);margin-top:3px}.top-actions{display:flex;gap:9px;align-items:center}.chip{border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);border-radius:999px;padding:8px 12px;font-size:12px}.chip.live{color:#9ff5d6;border-color:#1d6a50}.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:800;color:white;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));box-shadow:0 8px 22px rgba(33,211,154,.16)}.btn-secondary{background:#183129;border:1px solid #24483b}.btn-danger{background:#9e2932}.btn-danger:hover{background:#c23742}.btn-blue{background:linear-gradient(135deg,#348fe8,#2267c6)}.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}.hero{display:grid;grid-template-columns:1.6fr .8fr;gap:18px;margin-bottom:18px}.hero-main,.hero-side,.card{background:linear-gradient(180deg,rgba(18,39,31,.9),rgba(8,20,16,.92));border:1px solid var(--line);box-shadow:var(--shadow);border-radius:20px}.hero-main{padding:28px}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:900;margin-bottom:9px}.hero h2{font-size:clamp(26px,3.5vw,42px);line-height:1.05;margin-bottom:12px}.hero-copy{max-width:720px;color:#a9beb6;line-height:1.65;font-size:14px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.hero-side{padding:22px;display:flex;flex-direction:column;justify-content:space-between}.status-label{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase}.status{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;margin:8px 0}.dot{width:11px;height:11px;border-radius:50%;background:#84958e}.dot.irrigating{background:var(--green);box-shadow:0 0 0 7px rgba(33,211,154,.11);animation:pulse 1.5s infinite}.dot.completed{background:var(--green)}.dot.stopped{background:var(--amber)}.dot.emergency-stop{background:var(--red)}.status-msg{font-size:12px;color:var(--muted);line-height:1.5}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.stat{padding:17px 18px;background:rgba(10,27,21,.85);border:1px solid var(--line);border-radius:15px}.stat small{color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:800}.stat strong{display:block;font-size:24px;margin-top:7px}.layout{display:grid;grid-template-columns:1.45fr .75fr;gap:18px}.card{padding:20px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}.card-title{font-size:15px;font-weight:900}.card-sub{font-size:11px;color:var(--muted);margin-top:4px}.monitor-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.metric{padding:14px;background:#091711;border:1px solid var(--line);border-radius:13px}.metric-icon{font-size:17px}.metric-name{font-size:10px;color:var(--muted);margin-top:8px;text-transform:uppercase;font-weight:800}.metric-value{font-size:18px;font-weight:900;margin-top:4px}.metric-value.unavailable{color:#6e8079;font-size:13px}.notice{margin-top:12px;padding:10px 12px;border:1px dashed #254438;border-radius:11px;color:#8da69c;font-size:11px;line-height:1.5}.beds-toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:13px}.selected-pill{background:rgba(33,211,154,.08);border:1px solid rgba(33,211,154,.22);color:#9cf0d2;padding:7px 11px;border-radius:999px;font-size:11px;font-weight:800}.bed-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;max-height:395px;overflow:auto;padding-right:4px}.bed{position:relative;background:#0a1712;border:1px solid var(--line);border-radius:13px;padding:11px;cursor:pointer;transition:.18s;min-height:95px}.bed:hover{border-color:#356051;transform:translateY(-1px)}.bed.selected{border-color:var(--green);background:rgba(33,211,154,.09);box-shadow:inset 0 0 0 1px rgba(33,211,154,.15)}.bed.active{border-color:var(--blue);box-shadow:0 0 0 1px rgba(75,163,255,.16)}.bed.done{border-color:#2d6b53}.bed-number{font-weight:900;font-size:13px}.bed-state{font-size:9px;color:var(--muted);text-transform:uppercase;margin-top:5px;font-weight:800}.bed-duration{margin-top:9px;color:#b9cbc4;font-size:10px}.bed input{width:68px;background:#07100d;color:white;border:1px solid #254238;border-radius:7px;padding:5px;font-size:11px;margin-top:5px}.bed-check{position:absolute;right:9px;top:9px;color:var(--green);font-size:12px}.control-panel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.control-panel .btn{min-height:48px}.current{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.current-box{background:#091711;border:1px solid var(--line);border-radius:13px;padding:15px}.current-box small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;font-weight:800}.current-box strong{display:block;font-size:19px;margin-top:6px}.timer{font-variant-numeric:tabular-nums;color:var(--amber)!important}.schedule-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.field label{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;font-weight:800;margin-bottom:6px}.field input{width:100%;background:#07100d;color:white;border:1px solid #254238;border-radius:9px;padding:10px;outline:none}.field input:focus{border-color:var(--green)}.schedule-actions{display:flex;gap:9px;margin-top:11px}.schedule-status{margin-top:11px;padding:10px 12px;border-radius:10px;background:#091711;color:#a5b9b1;font-size:11px}.history{display:flex;flex-direction:column;gap:7px;max-height:230px;overflow:auto}.history-item{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:#091711;border:1px solid var(--line);border-radius:10px;font-size:11px}.history-item span:last-child{color:var(--muted)}.empty{color:#71857d;font-size:12px;padding:12px 0}.alert{position:fixed;right:22px;bottom:22px;z-index:10;max-width:380px;padding:13px 16px;background:#10251d;border:1px solid #2b5948;border-radius:13px;box-shadow:var(--shadow);font-size:12px;display:none}.alert.show{display:block;animation:slide .25s ease}.footer{text-align:center;color:#536a61;font-size:10px;padding:20px 0 4px}.kbd{font-size:9px;border:1px solid #315044;border-radius:5px;padding:2px 5px;color:#8ca49b}@keyframes pulse{50%{opacity:.45}}@keyframes slide{from{opacity:0;transform:translateY(8px)}}@media(max-width:1100px){.hero,.layout{grid-template-columns:1fr}.monitor-grid{grid-template-columns:repeat(3,1fr)}.bed-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:750px){.app{padding:13px}.topbar{align-items:flex-start}.top-actions .chip{display:none}.stats{grid-template-columns:1fr 1fr}.monitor-grid{grid-template-columns:1fr 1fr}.bed-grid{grid-template-columns:repeat(2,1fr)}.control-panel,.current,.schedule-form{grid-template-columns:1fr}.hero-main{padding:22px}.hero-actions .btn{flex:1}.topbar{flex-direction:column}.top-actions{width:100%}}
+
+/* ===== Bed progress / completion UI ===== */
+.section-help { color:#94a3b8; margin:-7px 0 16px; font-size:.9rem; }
+.bed-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+.bed-summary > div { background:rgba(0,0,0,.22); border:1px solid #2d3548; border-radius:10px; padding:11px 13px; }
+.summary-label { display:block; color:#94a3b8; font-size:.74rem; text-transform:uppercase; margin-bottom:4px; }
+.bed-summary strong { color:#e2e8f0; }
+.progress-wrap { margin-top:15px; background:rgba(0,0,0,.18); border-radius:11px; padding:12px 14px; }
+.progress-header { display:flex; justify-content:space-between; color:#94a3b8; font-size:.82rem; margin-bottom:8px; }
+.progress-header strong { color:#00b894; }
+.progress-track { height:9px; background:#141a26; border-radius:99px; overflow:hidden; }
+.progress-bar { height:100%; width:0%; background:linear-gradient(90deg,#00b894,#00cec9); border-radius:99px; transition:width .35s ease; }
+.bed-row { transition:all .2s ease; }
+.bed-row.is-irrigating { border-color:#00b894; box-shadow:0 0 0 1px rgba(0,184,148,.15), 0 0 18px rgba(0,184,148,.10); }
+.bed-row.is-completed { border-color:#2ecc71; background:rgba(46,204,113,.07); }
+.bed-row.is-completed .bed-btn { background:#2ecc71; border-color:#2ecc71; color:white; }
+.bed-row.is-completed .bed-state { color:#2ecc71; }
+.bed-actions { display:grid; grid-template-columns:1fr 180px; gap:10px; margin-top:10px; }
+.btn-clear-progress { background:transparent; color:#94a3b8; border:1px solid #3a455d; border-radius:8px; cursor:pointer; font-weight:700; }
+.btn-clear-progress:hover { color:#fff; border-color:#64748b; }
+.bed-state { margin-left:auto; min-width:92px; text-align:right; font-size:.76rem; font-weight:800; color:#94a3b8; text-transform:uppercase; }
+.bed-row.is-irrigating .bed-state { color:#00b894; }
+.bed-row.is-pending .bed-state { color:#fdcb6e; }
+@media (max-width:768px) {
+  .bed-summary { grid-template-columns:1fr; }
+  .bed-state { width:100%; margin-left:0; text-align:left; }
+  .bed-actions { grid-template-columns:1fr; }
+}
+
+
+.bed-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.bed-summary>div{background:#091711;border:1px solid var(--line);border-radius:11px;padding:11px}
+.summary-label{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;font-weight:800}
+.bed-summary strong{display:block;margin-top:5px;font-size:16px}
+.progress-wrap{margin-top:9px;background:#091711;border:1px solid var(--line);border-radius:10px;padding:7px}
+.progress-track{height:8px;background:#14251f;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--green),#5ce5bd);border-radius:99px;transition:width .3s ease}
+.bed{padding-bottom:12px}
+.bed-state{font-size:9px;color:var(--muted);text-transform:uppercase;margin-top:5px;font-weight:900}
+.bed.selected .bed-state{color:#9ff5d6}
+.bed.active .bed-state{color:#75b9ff}
+.bed.done .bed-state{color:#75e0ae}
+.bed.done{background:rgba(33,211,154,.045);border-color:#2d6b53}
+.bed.done .bed-check{color:#75e0ae}
+.bed-duration-row{display:flex;align-items:center;gap:6px;margin-top:7px;color:#b9cbc4;font-size:10px}
+.bed-duration-row input{margin-top:0}
+@media(max-width:750px){.bed-summary{grid-template-columns:1fr 1fr 1fr}.bed-summary strong{font-size:14px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">💧</div><div><h1>IRRY</h1><p>IRRY — Smart Irrigation • SIH Prototype Dashboard</p></div></div>
+    <div class="top-actions"><span class="chip live" id="connectionChip">● System Ready</span><span class="chip">3 default beds</span><span class="chip">Manual + Scheduled</span></div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Precision irrigation control</div>
+      <h2>Save water. Irrigate smarter.</h2>
+      <p class="hero-copy">Monitor field conditions, select crop beds, set precise irrigation durations and control the irrigation sequence from one simple dashboard.</p>
+      <div class="hero-actions"><button class="btn btn-primary" id="startIrrigation">▶ Start irrigation</button><button class="btn btn-secondary" id="stopIrrigation">■ Stop</button><button class="btn btn-danger" id="emergencyStop">⛔ Emergency stop</button></div>
+    </div>
+    <div class="hero-side"><div><div class="status-label">Live system status</div><div class="status"><span class="dot" id="statusDot"></span><span id="systemStatus">Idle</span></div><div class="status-msg" id="statusMessage">System ready. Select beds to begin.</div></div><div style="margin-top:18px"><div class="status-label">Current operation</div><div style="margin-top:7px;font-size:12px;color:#b8c9c2"><span id="currentBedTop">No bed active</span></div></div></div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>Selected beds</small><strong id="selectedCount">0</strong></div>
+    <div class="stat"><small>Current bed</small><strong id="currentBedStat">—</strong></div>
+    <div class="stat"><small>Valve</small><strong id="valveStat">Closed</strong></div>
+    <div class="stat"><small>Timer</small><strong id="timerStat">00:00</strong></div>
+  </section>
+
+  <main class="layout">
+    <div>
+      <section class="card">
+        <div class="card-head"><div><div class="card-title">Field monitoring</div><div class="card-sub">Live sensor and weather data from the backend</div></div><span class="chip" id="lastUpdated">Waiting for data</span></div>
+        <div class="monitor-grid">
+          <div class="metric"><div class="metric-icon">💧</div><div class="metric-name">Soil moisture</div><div class="metric-value unavailable" id="soilMoisture">Unavailable</div></div>
+          <div class="metric"><div class="metric-icon">🌡️</div><div class="metric-name">Temperature</div><div class="metric-value unavailable" id="temperature">Unavailable</div></div>
+          <div class="metric"><div class="metric-icon">💦</div><div class="metric-name">Humidity</div><div class="metric-value unavailable" id="humidity">Unavailable</div></div>
+          <div class="metric"><div class="metric-icon">☁️</div><div class="metric-name">Weather</div><div class="metric-value unavailable" id="weatherStatus">Unavailable</div></div>
+          <div class="metric"><div class="metric-icon">🌧️</div><div class="metric-name">Rain forecast</div><div class="metric-value unavailable" id="rainStatus">Unavailable</div></div>
+        </div>
+        <div class="notice">Sensors are displayed for monitoring. Irrigation duration is controlled by the operator/backend logic and is not silently changed by the frontend.</div>
+      </section>
+
+      <section class="card" style="margin-top:18px">
+        <div class="card-head"><div><div class="card-title">Field beds</div><div class="card-sub">3 beds by default • add more only when needed • set duration individually</div></div><span class="selected-pill" id="selectedBeds">None selected</span></div>
+        <div class="beds-toolbar">
+          <span style="font-size:11px;color:var(--muted)">Select beds in the order you want them irrigated.</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-ghost" id="addBedBtn" style="padding:7px 10px;font-size:10px">＋ Add more beds</button>
+            <button class="btn btn-ghost" id="clearBeds" style="padding:7px 10px;font-size:10px">Clear selection</button>
+            <button class="btn btn-ghost" id="clearProgressBtn" style="padding:7px 10px;font-size:10px">↺ Reset bed status</button>
+          </div>
+        </div>
+        <div class="bed-grid" id="bedControls"></div>
+        <div class="bed-summary">
+          <div><span class="summary-label">Completed</span><strong id="completedBeds">0 / 3</strong></div>
+          <div><span class="summary-label">Remaining</span><strong id="remainingBeds">3</strong></div>
+          <div><span class="summary-label">Field progress</span><strong id="progressPercent">0%</strong></div>
+        </div>
+        <div class="progress-wrap" aria-label="Field irrigation progress">
+          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:18px">
+        <div class="card-head"><div><div class="card-title">Irrigation sequence</div><div class="card-sub">Current bed, countdown and valve state</div></div></div>
+        <div class="current">
+          <div class="current-box"><small>Current bed</small><strong id="currentBed">None</strong></div>
+          <div class="current-box"><small>Countdown</small><strong class="timer" id="countdownTimer">00:00</strong></div>
+          <div class="current-box"><small>Valve</small><strong id="valveStatus">CLOSED</strong></div>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <section class="card">
+        <div class="card-head"><div><div class="card-title">Schedule irrigation</div><div class="card-sub">Plan the next irrigation cycle</div></div></div>
+        <div class="schedule-form"><div class="field"><label>Date</label><input type="date" id="scheduleDate"></div><div class="field"><label>Time</label><input type="time" id="scheduleTime"></div><div class="field"><label>Duration / bed</label><input type="number" id="scheduleDuration" value="2" min="0.5" step="0.5"></div></div>
+        <div class="schedule-actions"><button class="btn btn-blue" id="scheduleIrrigation">📅 Schedule</button><button class="btn btn-ghost" id="cancelSchedule">Cancel</button></div>
+        <div class="schedule-status" id="scheduleStatus">No irrigation scheduled.</div>
+      </section>
+
+      <section class="card" style="margin-top:18px">
+        <div class="card-head"><div><div class="card-title">Irrigation history</div><div class="card-sub">Latest completed beds</div></div><button class="btn btn-ghost" id="clearHistory" style="padding:7px 10px;font-size:10px">Clear</button></div>
+        <div class="history" id="irrigationHistory"><div class="empty">No irrigation history yet.</div></div>
+      </section>
+    </aside>
+  </main>
+  <div class="footer">IRRY • SIH-ready frontend prototype • <span class="kbd">25</span> field beds • responsive dashboard</div>
+</div>
+<div class="alert" id="message" role="status" aria-live="polite"></div>
+<script src="frontend.js"></script>
+</body>
+</html>

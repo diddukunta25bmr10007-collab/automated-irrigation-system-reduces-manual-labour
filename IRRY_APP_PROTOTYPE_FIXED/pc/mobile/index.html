@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07130f"><meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="/mobile/manifest.json"><title>IRRY Mobile Control</title>
+<style>
+:root{--bg:#06100d;--panel:#0b1814;--line:#1b332a;--text:#eaf5f0;--muted:#8ca49b;--g:#21d39a;--r:#ff5d63;--a:#f4c95d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:linear-gradient(180deg,#0d2b21,#06100d 42%);color:var(--text);min-height:100vh}.wrap{max-width:680px;margin:auto;padding:14px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}h1{font-size:21px;margin:0}.sub{font-size:11px;color:var(--muted);margin-top:3px}.chip{border:1px solid var(--line);padding:8px 10px;border-radius:999px;font-size:11px;color:var(--muted)}.chip.live{color:#9ff5d6;border-color:#1d6a50}.card{background:rgba(11,24,20,.94);border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px}.title{font-size:14px;font-weight:900}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric,.box{background:#091711;border:1px solid var(--line);border-radius:12px;padding:11px}.metric small,.box small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase}.metric strong,.box strong{display:block;margin-top:5px;font-size:17px}.beds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.bed{background:#091711;border:1px solid var(--line);border-radius:13px;padding:10px}.bed.sel{border-color:var(--g)}.bed.active{border-color:#4ba3ff}.bed h3{font-size:13px;margin:0 0 6px}.state{font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800}.bed input{width:100%;margin-top:8px;background:#06100d;color:#fff;border:1px solid #254238;border-radius:7px;padding:7px}.row{display:flex;gap:8px;margin-top:9px}.row>*{flex:1}button{border:0;border-radius:11px;padding:12px 10px;font-weight:900;font-size:12px;color:white;background:#193129}.g{background:linear-gradient(135deg,var(--g),#0aa878)!important}.s{background:#8b6924!important}.e{background:#9e2932!important}.ghost{background:transparent!important;border:1px solid var(--line)!important;color:var(--muted)!important}.bar{height:8px;background:#14251f;border-radius:99px;overflow:hidden;margin-top:10px}.bar div{height:100%;width:0;background:linear-gradient(90deg,var(--g),#5ce5bd);transition:.3s}.msg{font-size:11px;color:#a9beb6;min-height:18px;margin-top:9px}.settings{margin-top:12px}.settings input{width:100%;padding:10px;border:1px solid var(--line);background:#06100d;color:#fff;border-radius:9px}.settings button{margin-top:8px;width:100%;background:#245fbc}.hint{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.45}@media(max-width:420px){.beds{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div><h1>🌱 IRRY</h1><div class="sub">Mobile irrigation control</div></div><div id="conn" class="chip">● Connecting</div></div>
+<div class="card"><div class="title">Field monitoring</div><div class="grid">
+<div class="metric"><small>Soil moisture</small><strong id="soil">--</strong></div><div class="metric"><small>Temperature</small><strong id="temp">Unavailable</strong></div>
+<div class="metric"><small>Humidity</small><strong id="hum">Unavailable</strong></div><div class="metric"><small>Weather</small><strong id="weather">Local sensor data only</strong></div>
+<div class="metric"><small>Rain forecast</small><strong id="rain">Unavailable</strong></div><div class="metric"><small>Threshold</small><strong id="threshold">--</strong></div>
+</div></div>
+<div class="card"><div class="title">Beds</div><div id="beds" class="beds"></div><div class="row"><button id="all" class="ghost">Select 3</button><button id="clear" class="ghost">Clear</button></div></div>
+<div class="card"><div class="title">Live control</div><div class="grid">
+<div class="box"><small>Status</small><strong id="status">Idle</strong></div><div class="box"><small>Active bed</small><strong id="active">—</strong></div>
+<div class="box"><small>Timer</small><strong id="timer">00:00</strong></div><div class="box"><small>Pump</small><strong id="pump">OFF</strong></div>
+</div><div class="bar"><div id="bar"></div></div><div class="row"><button id="start" class="g">START SELECTED</button><button id="stop" class="s">STOP</button></div><div class="row"><button id="estop" class="e">EMERGENCY STOP</button></div><div id="msg" class="msg"></div></div>
+<div class="card settings"><div class="title">Connection</div><div class="hint">The app and PC prototype must use the same backend. Enter the PC address once if it changes.</div><input id="server" placeholder="http://192.168.x.x:5000"><button id="save">SAVE SERVER ADDRESS</button></div>
+</div>
+<script src="/mobile/app.js"></script>
+</body></html>

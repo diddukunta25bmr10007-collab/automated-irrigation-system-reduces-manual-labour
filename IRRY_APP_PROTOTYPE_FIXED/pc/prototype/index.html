@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Irrigation – 2D Prototype (Read-only Viewer)</title>
+<style>
+:root{--bg:#eef3f1;--ink:#19272d;--muted:#65747b;--line:#cdd8dc}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{width:min(1500px,100%);margin:auto;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:10px}
+h1{font-size:20px;margin:0;letter-spacing:.3px}
+.sub{font-size:11px;color:var(--muted);margin-top:3px}
+.conn{padding:7px 11px;border:1px solid var(--line);border-radius:999px;font-size:11px;white-space:nowrap}
+.conn.live{color:#08733c;border-color:#84cfa8;background:#effaf4}
+.board{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;overflow-x:auto}
+svg{display:block;width:100%;min-width:1200px;height:auto}
+.note{font-size:11px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1>Smart Irrigation – 2D Prototype (Read-only Viewer)</h1><div class="sub">Mobile app → Flask backend → this page. Values update live from the backend API.</div></div>
+    <div id="conn" class="conn">● Connecting</div>
+  </div>
+
+  <div class="board">
+    <svg viewBox="0 0 1400 980" xmlns="http://www.w3.org/2000/svg" aria-label="Smart irrigation field and control box schematic">
+      <rect x="0" y="0" width="1400" height="980" fill="#ffffff"/>
+      <text x="30" y="45" font-size="26" font-weight="800" fill="#19272d">SMART IRRIGATION – LIVE FROM BACKEND API</text>
+
+      <!-- main manifold -->
+      <rect x="100" y="150" width="26" height="610" rx="4" fill="#1367d8"/>
+      <text x="80" y="455" transform="rotate(-90 80 455)" text-anchor="middle" font-size="14" font-weight="700" fill="#19272d">MAIN MANIFOLD</text>
+
+      <!-- ============ BRANCH 1 / BED 1 ============ -->
+      <g id="branch1">
+        <text x="150" y="200" font-size="12" font-weight="700" fill="#19272d">BRANCH 1</text>
+        <line x1="126" y1="215" x2="200" y2="215" stroke="#1367d8" stroke-width="10"/>
+        <rect x="200" y="187" width="1" height="1" fill="none"/>
+        <rect x="200" y="188" width="60" height="52" rx="6" fill="#8a949e" stroke="#36444b" stroke-width="2" id="valveBox1"/>
+        <rect x="207" y="178" width="46" height="16" rx="3" fill="#9e2932"/>
+        <text x="230" y="190" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">SOL</text>
+        <text x="230" y="219" text-anchor="middle" font-size="13" font-weight="800" fill="#fff" id="valveLabel1">V1</text>
+        <line x1="260" y1="215" x2="310" y2="215" stroke="#1367d8" stroke-width="8"/>
+        <rect x="310" y="185" width="380" height="70" rx="6" fill="#fef9e3" stroke="#9b6a25" stroke-width="2" id="bedRect1"/>
+        <text x="500" y="200" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1" fill="#7a5a1e">MOISTURE</text>
+        <circle cx="500" cy="220" r="12" fill="#8a949e" stroke="#19272d" stroke-width="2" id="moistDot1"/>
+        <line x1="490" y1="220" x2="510" y2="220" stroke="#c0392b" stroke-width="3" id="moistBar1"/>
+        <text x="380" y="285" font-size="15" font-weight="800" fill="#19272d">BED 1</text>
+        <text x="380" y="306" font-size="12" fill="#19272d" id="bedStatus1">Idle</text>
+        <text x="380" y="325" font-size="12" font-weight="700" fill="#19272d" id="bedMoisture1">Moisture: 0%</text>
+        <text x="380" y="344" font-size="12" fill="#19272d" id="bedPlanned1">Planned: 120m</text>
+
+        <text x="670" y="155" text-anchor="middle" font-size="9" font-weight="700" fill="#19272d">WATER SENSOR</text>
+        <rect x="655" y="160" width="30" height="34" rx="3" fill="#7d8992" id="sensorBox1"/>
+        <line x1="663" y1="194" x2="663" y2="215" stroke="#7a2020" stroke-width="3"/>
+        <line x1="677" y1="194" x2="677" y2="215" stroke="#7a2020" stroke-width="3"/>
+        <circle cx="663" cy="215" r="4" fill="#8a949e" id="wetDotA1"/>
+        <circle cx="677" cy="215" r="4" fill="#1367d8" id="wetDotB1"/>
+        <text x="670" y="245" text-anchor="middle" font-size="13" font-weight="800" fill="#19272d">W1</text>
+
+        <line x1="690" y1="180" x2="950" y2="180" stroke="#1e8a4c" stroke-width="2"/>
+        <text x="955" y="184" font-size="12" font-weight="700" fill="#1e8a4c" id="sLabel1">S1</text>
+        <line x1="690" y1="215" x2="950" y2="220" stroke="#d33" stroke-width="2"/>
+        <text x="955" y="224" font-size="12" font-weight="700" fill="#d33" id="vLabel1">V1</text>
+        <line x1="690" y1="235" x2="950" y2="258" stroke="#e08a1c" stroke-width="2"/>
+        <text x="955" y="262" font-size="12" font-weight="700" fill="#e08a1c" id="mLabel1">M1</text>
+      </g>
+
+      <!-- ============ BRANCH 2 / BED 2 ============ -->
+      <g id="branch2">
+        <text x="150" y="420" font-size="12" font-weight="700" fill="#19272d">BRANCH 2</text>
+        <line x1="126" y1="435" x2="200" y2="435" stroke="#1367d8" stroke-width="10"/>
+        <rect x="200" y="408" width="60" height="52" rx="6" fill="#8a949e" stroke="#36444b" stroke-width="2" id="valveBox2"/>
+        <rect x="207" y="398" width="46" height="16" rx="3" fill="#9e2932"/>
+        <text x="230" y="410" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">SOL</text>
+        <text x="230" y="439" text-anchor="middle" font-size="13" font-weight="800" fill="#fff" id="valveLabel2">V2</text>
+        <line x1="260" y1="435" x2="310" y2="435" stroke="#1367d8" stroke-width="8"/>
+        <rect x="310" y="405" width="380" height="70" rx="6" fill="#fef9e3" stroke="#9b6a25" stroke-width="2" id="bedRect2"/>
+        <text x="500" y="420" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1" fill="#7a5a1e">MOISTURE</text>
+        <circle cx="500" cy="440" r="12" fill="#8a949e" stroke="#19272d" stroke-width="2" id="moistDot2"/>
+        <line x1="490" y1="440" x2="510" y2="440" stroke="#c0392b" stroke-width="3" id="moistBar2"/>
+        <text x="380" y="505" font-size="15" font-weight="800" fill="#19272d">BED 2</text>
+        <text x="380" y="526" font-size="12" fill="#19272d" id="bedStatus2">Idle</text>
+        <text x="380" y="545" font-size="12" font-weight="700" fill="#19272d" id="bedMoisture2">Moisture: 0%</text>
+        <text x="380" y="564" font-size="12" fill="#19272d" id="bedPlanned2">Planned: 120m</text>
+
+        <text x="670" y="375" text-anchor="middle" font-size="9" font-weight="700" fill="#19272d">WATER SENSOR</text>
+        <rect x="655" y="380" width="30" height="34" rx="3" fill="#7d8992" id="sensorBox2"/>
+        <line x1="663" y1="414" x2="663" y2="435" stroke="#7a2020" stroke-width="3"/>
+        <line x1="677" y1="414" x2="677" y2="435" stroke="#7a2020" stroke-width="3"/>
+        <circle cx="663" cy="435" r="4" fill="#8a949e" id="wetDotA2"/>
+        <circle cx="677" cy="435" r="4" fill="#1367d8" id="wetDotB2"/>
+        <text x="670" y="465" text-anchor="middle" font-size="13" font-weight="800" fill="#19272d">W2</text>
+
+        <line x1="690" y1="400" x2="950" y2="400" stroke="#1e8a4c" stroke-width="2"/>
+        <text x="955" y="404" font-size="12" font-weight="700" fill="#1e8a4c" id="sLabel2">S2</text>
+        <line x1="690" y1="435" x2="950" y2="440" stroke="#d33" stroke-width="2"/>
+        <text x="955" y="444" font-size="12" font-weight="700" fill="#d33" id="vLabel2">V2</text>
+        <line x1="690" y1="455" x2="950" y2="478" stroke="#e08a1c" stroke-width="2"/>
+        <text x="955" y="482" font-size="12" font-weight="700" fill="#e08a1c" id="mLabel2">M2</text>
+      </g>
+
+      <!-- ============ BRANCH 3 / BED 3 ============ -->
+      <g id="branch3">
+        <text x="150" y="640" font-size="12" font-weight="700" fill="#19272d">BRANCH 3</text>
+        <line x1="126" y1="655" x2="200" y2="655" stroke="#1367d8" stroke-width="10"/>
+        <rect x="200" y="628" width="60" height="52" rx="6" fill="#8a949e" stroke="#36444b" stroke-width="2" id="valveBox3"/>
+        <rect x="207" y="618" width="46" height="16" rx="3" fill="#9e2932"/>
+        <text x="230" y="630" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">SOL</text>
+        <text x="230" y="659" text-anchor="middle" font-size="13" font-weight="800" fill="#fff" id="valveLabel3">V3</text>
+        <line x1="260" y1="655" x2="310" y2="655" stroke="#1367d8" stroke-width="8"/>
+        <rect x="310" y="625" width="380" height="70" rx="6" fill="#fef9e3" stroke="#9b6a25" stroke-width="2" id="bedRect3"/>
+        <text x="500" y="640" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1" fill="#7a5a1e">MOISTURE</text>
+        <circle cx="500" cy="660" r="12" fill="#8a949e" stroke="#19272d" stroke-width="2" id="moistDot3"/>
+        <line x1="490" y1="660" x2="510" y2="660" stroke="#c0392b" stroke-width="3" id="moistBar3"/>
+        <text x="380" y="725" font-size="15" font-weight="800" fill="#19272d">BED 3</text>
+        <text x="380" y="746" font-size="12" fill="#19272d" id="bedStatus3">Idle</text>
+        <text x="380" y="765" font-size="12" font-weight="700" fill="#19272d" id="bedMoisture3">Moisture: 0%</text>
+        <text x="380" y="784" font-size="12" fill="#19272d" id="bedPlanned3">Planned: 120m</text>
+
+        <text x="670" y="595" text-anchor="middle" font-size="9" font-weight="700" fill="#19272d">WATER SENSOR</text>
+        <rect x="655" y="600" width="30" height="34" rx="3" fill="#7d8992" id="sensorBox3"/>
+        <line x1="663" y1="634" x2="663" y2="655" stroke="#7a2020" stroke-width="3"/>
+        <line x1="677" y1="634" x2="677" y2="655" stroke="#7a2020" stroke-width="3"/>
+        <circle cx="663" cy="655" r="4" fill="#8a949e" id="wetDotA3"/>
+        <circle cx="677" cy="655" r="4" fill="#1367d8" id="wetDotB3"/>
+        <text x="670" y="685" text-anchor="middle" font-size="13" font-weight="800" fill="#19272d">W3</text>
+
+        <line x1="690" y1="620" x2="950" y2="620" stroke="#1e8a4c" stroke-width="2"/>
+        <text x="955" y="624" font-size="12" font-weight="700" fill="#1e8a4c" id="sLabel3">S3</text>
+        <line x1="690" y1="655" x2="950" y2="660" stroke="#d33" stroke-width="2"/>
+        <text x="955" y="664" font-size="12" font-weight="700" fill="#d33" id="vLabel3">V3</text>
+        <line x1="690" y1="675" x2="950" y2="698" stroke="#e08a1c" stroke-width="2"/>
+        <text x="955" y="702" font-size="12" font-weight="700" fill="#e08a1c" id="mLabel3">M3</text>
+      </g>
+
+      <!-- ============ CENTRAL CONTROL BOX ============ -->
+      <g id="controlBox">
+        <rect x="1000" y="90" width="360" height="800" rx="14" fill="#e7e9ea" stroke="#253038" stroke-width="3"/>
+        <text x="1180" y="128" text-anchor="middle" font-size="18" font-weight="800" fill="#19272d">CENTRAL CONTROL BOX</text>
+
+        <line x1="1020" y1="150" x2="1340" y2="150" stroke="#8a949e" stroke-width="8"/>
+        <text x="1020" y="145" font-size="10" fill="#65747b">DIN Rail</text>
+
+        <rect x="1020" y="175" width="150" height="55" rx="6" fill="#f4a11a" stroke="#8a5c0a" stroke-width="2"/>
+        <text x="1095" y="207" text-anchor="middle" font-size="12" font-weight="800" fill="#19272d">24VAC PSU</text>
+        <rect x="1190" y="175" width="150" height="55" rx="6" fill="#7a3fae" stroke="#4b2569" stroke-width="2"/>
+        <text x="1265" y="207" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">ESP32</text>
+
+        <rect x="1020" y="248" width="320" height="34" rx="4" fill="#ffffff" stroke="#8a949e" stroke-width="2"/>
+        <text x="1180" y="270" text-anchor="middle" font-size="12" font-weight="700" fill="#19272d">TERMINAL BLOCKS</text>
+
+        <rect x="1020" y="296" width="150" height="34" rx="4" fill="#d1332f" stroke="#7a1a17" stroke-width="2"/>
+        <text x="1095" y="318" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">FUSES / MCB</text>
+
+        <text x="1180" y="360" text-anchor="middle" font-size="10" fill="#65747b" id="ctlStatusLabel">STATUS</text>
+        <text x="1180" y="380" text-anchor="middle" font-size="14" font-weight="800" fill="#19272d" id="ctlStatus">Idle</text>
+
+        <g id="glands">
+          <ellipse cx="1035" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1075" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1115" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1155" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1195" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1235" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1275" cy="855" rx="12" ry="7" fill="#19272d"/>
+          <ellipse cx="1315" cy="855" rx="12" ry="7" fill="#19272d"/>
+        </g>
+        <text x="1180" y="835" text-anchor="middle" font-size="10" fill="#65747b">CABLE GLANDS (8)</text>
+      </g>
+
+      <!-- ============ LEGEND ============ -->
+      <g id="legend">
+        <rect x="1020" y="900" width="340" height="70" rx="8" fill="#ffffff" stroke="#cdd8dc" stroke-width="1"/>
+        <text x="1035" y="920" font-size="12" font-weight="800" fill="#19272d">LEGEND</text>
+        <rect x="1035" y="928" width="18" height="6" fill="#1367d8"/><text x="1058" y="934" font-size="10" fill="#19272d">Pipe/Water</text>
+        <rect x="1035" y="942" width="18" height="6" fill="#1e8a4c"/><text x="1058" y="948" font-size="10" fill="#19272d">Valve open / sensor wet</text>
+        <rect x="1230" y="928" width="18" height="6" fill="#8a949e"/><text x="1253" y="934" font-size="10" fill="#19272d">Inactive</text>
+        <rect x="1230" y="942" width="18" height="6" fill="#c0392b"/><text x="1253" y="948" font-size="10" fill="#19272d">Moisture low</text>
+      </g>
+    </svg>
+  </div>
+  <div class="note">This page is read-only. Start, stop, and emergency-stop irrigation from the IRRY mobile app — the schematic above simply mirrors the backend's live state.</div>
+</div>
+<script>
+async function j(u){const r=await fetch(u,{cache:"no-store"});if(!r.ok)throw Error();return r.json()}
+function t(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
+function f(id,v){const e=document.getElementById(id);if(e)e.setAttribute("fill",v)}
+const GREEN="#1e8a4c",GRAY="#8a949e",RED="#c0392b",BLUE="#1367d8";
+
+async function update(){
+  try{
+    const [s,m]=await Promise.all([j('/api/status'),j('/api/sensor-data')]);
+    const conn=document.getElementById('conn');conn.textContent='● Backend connected';conn.classList.add('live');
+    t('ctlStatus', s.status || 'Idle');
+
+    for(let i=1;i<=3;i++){
+      const moist = s.moisture?.['bed'+i];
+      const running = !!s.running && Number(s.current_bed)===i;
+      const detected = s.sensors?.['sensor'+i]==='Detected';
+      const durSec = s.bed_durations?.[String(i)];
+      const plannedMin = durSec ? Math.round(durSec/60) : 120;
+
+      t('bedStatus'+i, running ? 'Irrigating' : (s.running ? 'Waiting' : 'Idle'));
+      t('bedMoisture'+i, 'Moisture: ' + (moist!=null ? moist : 0) + '%');
+      t('bedPlanned'+i, 'Planned: ' + plannedMin + 'm');
+
+      f('valveBox'+i, running ? GREEN : GRAY);
+      f('bedRect'+i, running ? '#dbeeff' : '#fef9e3');
+      f('moistDot'+i, moist!=null && moist < (s.moisture_threshold||60) ? RED : GREEN);
+      f('wetDotB'+i, detected ? GREEN : BLUE);
+      f('sensorBox'+i, detected ? GREEN : '#7d8992');
+
+      f('sLabel'+i, detected ? GREEN : '#65747b');
+      f('vLabel'+i, running ? RED : '#8a949e');
+      f('mLabel'+i, moist!=null && moist < (s.moisture_threshold||60) ? RED : '#e08a1c');
+    }
+  }catch(e){
+    const conn=document.getElementById('conn');conn.textContent='● Backend offline';conn.classList.remove('live');
+  }
+}
+update();setInterval(update,1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+ANDROID APK BUILD
+
+Open the mobile_android folder in Android Studio and Build -> Build APK(s).
+
+Or, on a Windows machine with Android SDK / Gradle configured:
+  gradlew.bat assembleDebug
+
+APK output:
+  app/build/outputs/apk/debug/app-debug.apk
+
+The app loads the IRRY mobile interface from the PC backend.
+Default URL is:
+  http://172.25.235.94:5000/mobile/
+
+You can change the URL inside the app, so it stays usable if the PC IP changes.
+
+The Android manifest intentionally allows cleartext HTTP because the current
+LAN development setup uses http://PC-IP:5000. For production/cloud deployment,
+use HTTPS instead.
